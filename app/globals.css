@@ -117,12 +117,22 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+:root {
+  /* 稀有度颜色 */
+  --rarity-n: #9ca3af;
+  --rarity-r: #22c55e;
+  --rarity-sr: #818cf8;
+  --rarity-ssr: #f59e0b;
+  --rarity-ur: #e879f9;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #020617;
   }
   html {
     @apply font-sans;

@@ -1,0 +1,212 @@
+[
+  {
+    "name": "炎尾狐",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_001.webp",
+    "description": "栖居于火山脚下的小型火精灵，尾巴上常年燃着细小的火焰。",
+    "element": "火"
+  },
+  {
+    "name": "水晶鱼",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_002.webp",
+    "description": "透明如水晶的小鱼精，游过的水面会留下点点蓝光。",
+    "element": "水"
+  },
+  {
+    "name": "嫩芽兔",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_003.webp",
+    "description": "耳朵上长着嫩绿色嫩芽的草系精灵，喜欢在森林边缘跳跃。",
+    "element": "草"
+  },
+  {
+    "name": "闪电鼠",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_004.webp",
+    "description": "毛发蓬松、充满静电的小鼠精，激动时会放出微弱的电弧。",
+    "element": "电"
+  },
+  {
+    "name": "幽灯萤",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_005.webp",
+    "description": "在废弃庭院中飞舞的萤火精灵，发出的光有时带着哭声。",
+    "element": "幽灵"
+  },
+  {
+    "name": "霜爪猫",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_006.webp",
+    "description": "脚掌结着薄冰的小猫精，踩过的地面会留下冰晶脚印。",
+    "element": "冰"
+  },
+  {
+    "name": "暗影蝙",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_007.webp",
+    "description": "只在月圆之夜现身的蝙蝠精，翅膀折叠时形如一片阴影。",
+    "element": "暗"
+  },
+  {
+    "name": "石鳞蜥",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_008.webp",
+    "description": "鳞片坚硬如石头的蜥蜴精，遇到危险会蜷成一颗石球。",
+    "element": "草"
+  },
+  {
+    "name": "红果松鼠",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_009.webp",
+    "description": "总是抱着火红果实的松鼠精，能从果实中提取微弱的火焰。",
+    "element": "火"
+  },
+  {
+    "name": "泡泡蛙",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_010.webp",
+    "description": "会吐出五彩泡泡的青蛙精，泡泡破裂时散发清凉水雾。",
+    "element": "水"
+  },
+  {
+    "name": "电纹甲虫",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_011.webp",
+    "description": "甲壳上布满放电纹路的甲虫精，被触碰时会给人轻微电击。",
+    "element": "电"
+  },
+  {
+    "name": "雪绒羊",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_012.webp",
+    "description": "全身覆盖着雪白绒毛的小羊精，寒冬中不惧风雪悠然漫步。",
+    "element": "冰"
+  },
+  {
+    "name": "苔藓熊",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_013.webp",
+    "description": "背上长满青苔的小熊精，常常被误认为是一块苔藓岩石。",
+    "element": "草"
+  },
+  {
+    "name": "灰烬鸦",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_014.webp",
+    "description": "羽毛带着余烬气息的乌鸦精，停落之处往往留有焦黑痕迹。",
+    "element": "火"
+  },
+  {
+    "name": "迷雾鱼",
+    "rarity": "N",
+    "image_url": "/images/sprites/N_015.webp",
+    "description": "能制造浓雾隐匿自身的小鱼精，夜晚常在湖面上静静漂浮。",
+    "element": "幽灵"
+  },
+  {
+    "name": "燃鬃狼",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_001.webp",
+    "description": "鬃毛如同燃烧火焰的狼精，嚎叫时能点燃方圆数米的干草。",
+    "element": "火"
+  },
+  {
+    "name": "珊瑚鲨",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_002.webp",
+    "description": "背鳍长满珊瑚的鲨鱼精，能在礁石间以惊人的速度穿梭。",
+    "element": "水"
+  },
+  {
+    "name": "雷羽鹰",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_003.webp",
+    "description": "每一片羽毛都带有电荷的猎鹰精，展翅时引来漫天雷云。",
+    "element": "电"
+  },
+  {
+    "name": "幽魂树",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_004.webp",
+    "description": "外形如古树却能行走的幽灵精，树洞里藏着无数消散的灵魂。",
+    "element": "幽灵"
+  },
+  {
+    "name": "冰晶鹿",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_005.webp",
+    "description": "鹿角由纯净冰晶构成的精灵，踏雪而行时无声无息。",
+    "element": "冰"
+  },
+  {
+    "name": "藤蟒",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_006.webp",
+    "description": "身体盘绕着常青藤的巨蟒精，能控制植物将猎物缠缚。",
+    "element": "草"
+  },
+  {
+    "name": "黑曜蝎",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_007.webp",
+    "description": "全身如黑曜石般漆黑的蝎子精，毒液能腐蚀光明。",
+    "element": "暗"
+  },
+  {
+    "name": "晨曦羽凤",
+    "rarity": "R",
+    "image_url": "/images/sprites/R_008.webp",
+    "description": "沐浴晨光而生的凤鸟精，羽毛上常有金色光芒流动。",
+    "element": "光"
+  },
+  {
+    "name": "熔岩巨犀",
+    "rarity": "SR",
+    "image_url": "/images/sprites/SR_001.webp",
+    "description": "角上流淌熔岩的犀牛精灵，冲锋时大地为之颤抖，火石四溅。",
+    "element": "火"
+  },
+  {
+    "name": "深渊章鱼",
+    "rarity": "SR",
+    "image_url": "/images/sprites/SR_002.webp",
+    "description": "来自深海深渊的章鱼精，每条触手都蕴藏着不可思议的水压。",
+    "element": "水"
+  },
+  {
+    "name": "冰魄女妖",
+    "rarity": "SR",
+    "image_url": "/images/sprites/SR_003.webp",
+    "description": "以永恒寒冰凝结而成的女妖精灵，歌声能将万物冻结于瞬间。",
+    "element": "冰"
+  },
+  {
+    "name": "雷霆神鹰",
+    "rarity": "SR",
+    "image_url": "/images/sprites/SR_004.webp",
+    "description": "翼展如云的神鹰精，每一次振翅皆掀起惊天雷霆。",
+    "element": "电"
+  },
+  {
+    "name": "混沌龙皇",
+    "rarity": "SSR",
+    "image_url": "/images/sprites/SSR_001.webp",
+    "description": "身上鳞片凝聚混沌之力的古龙精灵，传说其一声低吼可撼动天地秩序。",
+    "element": "龙"
+  },
+  {
+    "name": "虚空冥后",
+    "rarity": "SSR",
+    "image_url": "/images/sprites/SSR_002.webp",
+    "description": "统御暗影与虚空的冥界女王精灵，裙裾所过之处光明尽灭，万籁俱寂。",
+    "element": "暗"
+  },
+  {
+    "name": "创世光神",
+    "rarity": "UR",
+    "image_url": "/images/sprites/UR_001.webp",
+    "description": "传说中开辟世界之初便存在的神明精灵，其光辉能净化一切黑暗与混沌，被各族视为最高守护神祇。",
+    "element": "光"
+  }
+]
