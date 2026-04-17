@@ -9,21 +9,40 @@ import type { GachaPhase, GachaResult } from '@/types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const LOG_MESSAGES = [
+  '> INITIALIZING SUMMON PROTOCOL...',
+  '> CONNECTING TO SPIRIT DATABASE...',
+  '> CALCULATING PROBABILITY MATRIX...',
+  '> EXECUTING RANDOM SEED ALGORITHM...',
+  '> RETRIEVING ENTITY FROM POOL...',
+  '> DECRYPTING SPRITE DATA...',
+  '> RENDERING ENTITY...',
+];
+
 export default function GachaScene() {
   const [phase, setPhase] = useState<GachaPhase>('idle');
   const [result, setResult] = useState<GachaResult | null>(null);
+  const [logLine, setLogLine] = useState(0);
 
   const handlePull = useCallback(async () => {
     if (phase !== 'idle' && phase !== 'done') return;
 
     setPhase('pulling');
     setResult(null);
+    setLogLine(0);
 
-    // API 请求与最短等待时间并发
+    // 模拟日志滚动
+    const logInterval = setInterval(() => {
+      setLogLine((l) => Math.min(l + 1, LOG_MESSAGES.length - 1));
+    }, 120);
+
     const [data] = await Promise.all([
       fetch('/api/gacha', { method: 'POST' }).then((r) => r.json()),
       delay(600),
     ]);
+
+    clearInterval(logInterval);
+    setLogLine(LOG_MESSAGES.length - 1);
 
     if (data.error) {
       setPhase('idle');
@@ -31,17 +50,12 @@ export default function GachaScene() {
     }
 
     setResult(data.result);
-
-    // 动效时间轴
     setPhase('flash');
     await delay(400);
-
     setPhase('reveal');
     await delay(700);
-
     setPhase('glow');
     await delay(1000);
-
     setPhase('done');
   }, [phase]);
 
@@ -50,49 +64,88 @@ export default function GachaScene() {
   const isGlowing = phase === 'glow' || phase === 'done';
   const isPulling = phase === 'pulling' || phase === 'flash';
   const isDone = phase === 'done';
+  const isIdle = phase === 'idle';
 
   return (
-    <div className="flex flex-col items-center gap-12">
+    <div className="flex flex-col items-center gap-8 w-full max-w-sm">
+      {/* 终端日志区（pulling 时显示） */}
+      <AnimatePresence>
+        {isPulling && (
+          <motion.div
+            className="w-full text-xs p-3"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            style={{
+              border: '1px solid rgba(0,255,65,0.2)',
+              background: 'rgba(0,0,0,0.5)',
+              fontFamily: 'var(--font-mono-display)',
+              color: 'rgba(0,255,65,0.6)',
+            }}
+          >
+            {LOG_MESSAGES.slice(0, logLine + 1).map((msg, i) => (
+              <div key={i} style={{ color: i === logLine ? '#00ff41' : 'rgba(0,255,65,0.35)' }}>
+                {msg}
+              </div>
+            ))}
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity }}
+              style={{ color: '#00ff41' }}
+            >
+              █
+            </motion.span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* 卡片区域 */}
       <div className="relative">
-        {/* 全屏白光 flash */}
         <AnimatePresence>
           {isFlashing && (
             <motion.div
-              className="fixed inset-0 bg-white z-50 pointer-events-none"
+              className="fixed inset-0 z-50 pointer-events-none"
+              style={{ background: 'rgba(0,255,65,0.15)' }}
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.9, 0] }}
+              animate={{ opacity: [0, 1, 0] }}
               transition={{ duration: 0.4, times: [0, 0.3, 1] }}
             />
           )}
         </AnimatePresence>
 
-        {/* 光晕层 */}
         <RarityGlow rarity={result?.rarity ?? 'N'} active={isGlowing} />
-
-        {/* 粒子层 */}
         <ParticleEffect rarity={result?.rarity ?? 'N'} active={isGlowing} />
-
-        {/* 卡片翻转 */}
         <CardFlip flipped={isRevealed} sprite={result?.sprite ?? null} />
       </div>
 
-      {/* 精灵名称（done 时弹出） */}
+      {/* 结果输出（done 时） */}
       <AnimatePresence>
         {isDone && result && (
           <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className="w-full text-xs p-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            style={{
+              border: '1px solid rgba(0,255,65,0.25)',
+              background: 'rgba(0,0,0,0.6)',
+              fontFamily: 'var(--font-mono-display)',
+            }}
           >
-            <p className="text-slate-400 text-sm mb-1">获得精灵</p>
-            <p className="text-white text-2xl font-bold">{result.sprite.name}</p>
+            <div style={{ color: 'rgba(0,255,65,0.4)' }}>{'> ENTITY IDENTIFIED'}</div>
+            <div style={{ color: '#00ff41' }}>
+              {'> NAME  :: '}
+              <span style={{ color: '#ffb700', fontFamily: 'var(--font-pixel)', fontSize: '1rem' }}>
+                {result.sprite.name}
+              </span>
+            </div>
+            <div style={{ color: 'rgba(0,255,65,0.6)' }}>{'> RARITY:: '}{result.rarity}</div>
+            <div style={{ color: 'rgba(0,255,65,0.6)' }}>{'> TYPE  :: '}{result.sprite.element ?? 'UNKNOWN'}</div>
+            <div style={{ color: 'rgba(0,255,65,0.3)' }}>{'> STATUS:: CAPTURED \u2713'}</div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 操作按钮 */}
+      {/* 按钮区 */}
       <div className="flex flex-col items-center gap-3">
         <GachaButton
           onPull={handlePull}
@@ -102,16 +155,37 @@ export default function GachaScene() {
         <AnimatePresence>
           {isDone && (
             <motion.button
-              className="text-slate-400 text-sm hover:text-white transition-colors underline underline-offset-2"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="text-xs tracking-widest"
+              style={{
+                color: 'rgba(0,255,65,0.4)',
+                fontFamily: 'var(--font-mono-display)',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setPhase('idle')}
             >
-              重置
+              {'[ RESET TERMINAL ]'}
             </motion.button>
           )}
         </AnimatePresence>
+
+        {/* 待机状态提示 */}
+        {isIdle && (
+          <p
+            className="text-xs"
+            style={{
+              color: 'rgba(0,255,65,0.3)',
+              fontFamily: 'var(--font-mono-display)',
+              letterSpacing: '0.15em',
+            }}
+          >
+            {'AWAITING COMMAND...'}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -9,25 +9,34 @@ interface GachaButtonProps {
 
 export default function GachaButton({ onPull, disabled, isPulling }: GachaButtonProps) {
   return (
-    <div className="relative">
-      {/* 旋转光圈（pulling 时显示）*/}
-      {isPulling && (
-        <motion.div
-          className="absolute inset-0 rounded-full border-2 border-transparent"
-          style={{ borderTopColor: '#f59e0b', borderRightColor: '#e879f9' }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-        />
+    <motion.button
+      onClick={onPull}
+      disabled={disabled}
+      whileHover={!disabled ? { scale: 1.02 } : {}}
+      whileTap={!disabled ? { scale: 0.98 } : {}}
+      className="relative px-8 py-3 text-sm font-bold tracking-widest uppercase disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+      style={{
+        fontFamily: 'var(--font-mono-display)',
+        color: disabled ? 'rgba(0,255,65,0.4)' : '#030a03',
+        background: disabled ? 'transparent' : '#00ff41',
+        border: `1px solid ${disabled ? 'rgba(0,255,65,0.3)' : '#00ff41'}`,
+        boxShadow: disabled ? 'none' : '0 0 20px rgba(0,255,65,0.4), 0 0 40px rgba(0,255,65,0.15)',
+        letterSpacing: '0.25em',
+      }}
+    >
+      {isPulling ? (
+        <span className="flex items-center gap-2">
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ duration: 0.6, repeat: Infinity }}
+          >
+            ▮
+          </motion.span>
+          SUMMONING...
+        </span>
+      ) : (
+        '> EXECUTE SUMMON'
       )}
-      <motion.button
-        onClick={onPull}
-        disabled={disabled}
-        whileHover={!disabled ? { scale: 1.05 } : {}}
-        whileTap={!disabled ? { scale: 0.95 } : {}}
-        className="relative px-10 py-4 rounded-full font-bold text-lg text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-900/50 transition-colors"
-      >
-        {isPulling ? '抽取中...' : '✦ 召唤精灵 ✦'}
-      </motion.button>
-    </div>
+    </motion.button>
   );
 }

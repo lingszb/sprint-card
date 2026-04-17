@@ -7,7 +7,38 @@
       "mcp__plugin_context7_context7__query-docs",
       "Bash(bun create *)",
       "Bash(bun add *)",
-      "Bash(bunx --bun shadcn@latest init --defaults)"
+      "Bash(bunx --bun shadcn@latest init --defaults)",
+      "Bash(bunx --bun shadcn@latest add badge card --yes)",
+      "Bash(bun run *)",
+      "Bash(bun dev *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(netstat -ano)",
+      "Bash(node -e \"const v = require\\('next/package.json'\\).version; console.log\\(v\\)\")",
+      "Bash(pkill -f \"next dev\")",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__get_publishable_keys",
+      "mcp__supabase__get_advisors",
+      "Bash(cmd *)",
+      "Bash(powershell *)",
+      "Bash(curl *)",
+      "Bash(gh repo *)",
+      "Bash(gh auth *)",
+      "Bash(vercel --version)",
+      "Bash(bunx vercel *)",
+      "Bash(vercel whoami *)",
+      "Bash(vercel --yes)",
+      "Bash(vercel --yes --name sprint-card)",
+      "Bash(vercel env *)",
+      "Bash(vercel --prod --yes)",
+      "Bash(npx tsc *)",
+      "Bash(bunx tsc *)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }

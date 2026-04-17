@@ -1,22 +1,76 @@
 export default function CardBack() {
   return (
-    <div className="w-64 h-96 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-600 flex items-center justify-center relative overflow-hidden shadow-2xl">
-      {/* 背景几何纹样 */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #6366f1 0%, transparent 60%)' }} />
-        <div className="absolute top-4 left-4 right-4 bottom-4 border border-indigo-500/30 rounded-xl" />
-        <div className="absolute top-8 left-8 right-8 bottom-8 border border-indigo-500/20 rounded-xl" />
+    <div
+      className="w-64 h-96 flex flex-col items-center justify-center relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, #030a03 0%, #050f05 100%)',
+        border: '1px solid rgba(0,255,65,0.2)',
+        boxShadow: '0 0 15px rgba(0,255,65,0.05), inset 0 0 30px rgba(0,0,0,0.8)',
+      }}
+    >
+      {/* 矩阵雨背景字符 */}
+      <div
+        className="absolute inset-0 flex flex-col justify-center items-center opacity-10 overflow-hidden"
+        style={{
+          fontFamily: 'var(--font-mono-display)',
+          fontSize: '0.6rem',
+          color: '#00ff41',
+          lineHeight: '1.2',
+        }}
+      >
+        {Array.from({ length: 18 }, (_, i) => (
+          <div key={i} style={{ letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>
+            {Array.from({ length: 32 }, (_, j) =>
+              String.fromCharCode(33 + ((i * 7 + j * 13) % 90))
+            ).join('')}
+          </div>
+        ))}
       </div>
-      {/* 中央 Pokéball 风格图案 */}
-      <div className="relative z-10 w-32 h-32 rounded-full border-4 border-slate-600 bg-gradient-to-b from-slate-700 to-slate-900 flex items-center justify-center shadow-inner">
-        <div className="w-28 h-0.5 bg-slate-500 absolute" />
-        <div className="w-10 h-10 rounded-full bg-slate-800 border-4 border-slate-600 z-10" />
+
+      {/* 中央图案 */}
+      <div className="relative z-10 text-center">
+        <pre
+          className="text-sm leading-tight"
+          style={{
+            fontFamily: 'var(--font-mono-display)',
+            color: 'rgba(0,255,65,0.6)',
+            textShadow: '0 0 8px rgba(0,255,65,0.4)',
+          }}
+        >
+{`╔══════════╗
+║ ██████ ║
+║ █ SG █ ║
+║ ██████ ║
+║ SYSTEM ║
+╚══════════╝`}
+        </pre>
+        <p
+          className="text-xs mt-3"
+          style={{
+            color: 'rgba(0,255,65,0.3)',
+            fontFamily: 'var(--font-mono-display)',
+            letterSpacing: '0.3em',
+          }}
+        >
+          SPRITE·GACHA
+        </p>
+        <p
+          className="text-xs"
+          style={{
+            color: 'rgba(0,255,65,0.2)',
+            fontFamily: 'var(--font-mono-display)',
+            letterSpacing: '0.2em',
+          }}
+        >
+          v2.4.1 // CLASSIFIED
+        </p>
       </div>
+
       {/* 角落装饰 */}
-      <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-indigo-500/50 rounded-tl-lg" />
-      <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-indigo-500/50 rounded-tr-lg" />
-      <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-indigo-500/50 rounded-bl-lg" />
-      <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-indigo-500/50 rounded-br-lg" />
+      <div className="absolute top-2 left-2 w-4 h-4" style={{ borderTop: '1px solid rgba(0,255,65,0.3)', borderLeft: '1px solid rgba(0,255,65,0.3)' }} />
+      <div className="absolute top-2 right-2 w-4 h-4" style={{ borderTop: '1px solid rgba(0,255,65,0.3)', borderRight: '1px solid rgba(0,255,65,0.3)' }} />
+      <div className="absolute bottom-2 left-2 w-4 h-4" style={{ borderBottom: '1px solid rgba(0,255,65,0.3)', borderLeft: '1px solid rgba(0,255,65,0.3)' }} />
+      <div className="absolute bottom-2 right-2 w-4 h-4" style={{ borderBottom: '1px solid rgba(0,255,65,0.3)', borderRight: '1px solid rgba(0,255,65,0.3)' }} />
     </div>
   );
 }
