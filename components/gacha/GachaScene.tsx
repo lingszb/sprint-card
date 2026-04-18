@@ -15,7 +15,14 @@ async function getOrCreateAnonToken(): Promise<string | null> {
   const { data: { session } } = await supabase.auth.getSession();
   if (session?.access_token) return session.access_token;
   const { data, error } = await supabase.auth.signInAnonymously();
-  if (error || !data.session) return null;
+  if (error) {
+    console.error('[anon-auth] signInAnonymously failed:', error.message, error.status, JSON.stringify(error));
+    return null;
+  }
+  if (!data.session) {
+    console.error('[anon-auth] no session returned after signInAnonymously');
+    return null;
+  }
   return data.session.access_token;
 }
 
@@ -33,11 +40,16 @@ export default function GachaScene() {
   const [phase, setPhase] = useState<GachaPhase>('idle');
   const [result, setResult] = useState<GachaResult | null>(null);
   const [logLine, setLogLine] = useState(0);
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   // 页面加载时预先完成匿名登录
   useEffect(() => {
-    getOrCreateAnonToken().catch(() => setAuthError(true));
+    getOrCreateAnonToken().then((token) => {
+      if (!token) setAuthError('signInAnonymously returned null — check console');
+    }).catch((e: unknown) => {
+      const msg = e instanceof Error ? e.message : String(e);
+      setAuthError(msg);
+    });
   }, []);
 
   const handlePull = useCallback(async () => {
@@ -49,7 +61,7 @@ export default function GachaScene() {
 
     const token = await getOrCreateAnonToken();
     if (!token) {
-      setAuthError(true);
+      setAuthError('Auth failed — see console for details');
       setPhase('idle');
       return;
     }
@@ -201,16 +213,18 @@ export default function GachaScene() {
 
         {/* 待机状态提示 */}
         {isIdle && (
-          <p
-            className="text-xs"
-            style={{
-              color: authError ? '#ff4444' : 'rgba(0,255,65,0.3)',
-              fontFamily: 'var(--font-mono-display)',
-              letterSpacing: '0.15em',
-            }}
-          >
-            {authError ? 'ERR: AUTH FAILED — CHECK SUPABASE ANON' : 'AWAITING COMMAND...'}
-          </p>
+          <div style={{ textAlign: 'center' }}>
+            <p
+              className="text-xs"
+              style={{
+                color: authError ? '#ff4444' : 'rgba(0,255,65,0.3)',
+                fontFamily: 'var(--font-mono-display)',
+                letterSpacing: '0.15em',
+              }}
+            >
+              {authError ? `ERR: ${authError}` : 'AWAITING COMMAND...'}
+            </p>
+          </div>
         )}
       </div>
     </div>
