@@ -1,6 +1,7 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createClient } from '@/lib/supabase/client';
 import CardFlip from './CardFlip';
 import GachaButton from './GachaButton';
 import RarityGlow from './RarityGlow';
@@ -8,6 +9,15 @@ import ParticleEffect from './ParticleEffect';
 import type { GachaPhase, GachaResult } from '@/types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function getOrCreateAnonToken(): Promise<string | null> {
+  const supabase = createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.access_token) return session.access_token;
+  const { data, error } = await supabase.auth.signInAnonymously();
+  if (error || !data.session) return null;
+  return data.session.access_token;
+}
 
 const LOG_MESSAGES = [
   '> INITIALIZING SUMMON PROTOCOL...',
@@ -23,6 +33,12 @@ export default function GachaScene() {
   const [phase, setPhase] = useState<GachaPhase>('idle');
   const [result, setResult] = useState<GachaResult | null>(null);
   const [logLine, setLogLine] = useState(0);
+  const [authError, setAuthError] = useState(false);
+
+  // 页面加载时预先完成匿名登录
+  useEffect(() => {
+    getOrCreateAnonToken().catch(() => setAuthError(true));
+  }, []);
 
   const handlePull = useCallback(async () => {
     if (phase !== 'idle' && phase !== 'done') return;
@@ -31,13 +47,23 @@ export default function GachaScene() {
     setResult(null);
     setLogLine(0);
 
+    const token = await getOrCreateAnonToken();
+    if (!token) {
+      setAuthError(true);
+      setPhase('idle');
+      return;
+    }
+
     // 模拟日志滚动
     const logInterval = setInterval(() => {
       setLogLine((l) => Math.min(l + 1, LOG_MESSAGES.length - 1));
     }, 120);
 
     const [data] = await Promise.all([
-      fetch('/api/gacha', { method: 'POST' }).then((r) => r.json()),
+      fetch('/api/gacha', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((r) => r.json()),
       delay(600),
     ]);
 
@@ -178,12 +204,12 @@ export default function GachaScene() {
           <p
             className="text-xs"
             style={{
-              color: 'rgba(0,255,65,0.3)',
+              color: authError ? '#ff4444' : 'rgba(0,255,65,0.3)',
               fontFamily: 'var(--font-mono-display)',
               letterSpacing: '0.15em',
             }}
           >
-            {'AWAITING COMMAND...'}
+            {authError ? 'ERR: AUTH FAILED — CHECK SUPABASE ANON' : 'AWAITING COMMAND...'}
           </p>
         )}
       </div>
